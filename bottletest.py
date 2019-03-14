@@ -13,7 +13,7 @@ def last_game_result():
 
 @route('/configuration/<machine>')
 def configuration(machine):
-    return '<h1>configuration page<h1>'
+    return '<h1>configuration page of ' + machine + '<h1>'
 
 
 @route('/statperday/<machine>')
