@@ -6,7 +6,7 @@ import json
 
 
 mysql_db = MySQLDatabase('filrouge', user='filrouge', password='Dorian26000.',
-                         host='localhost', port=3306)
+                         host='10.1.0.125')
 
 class BaseModel(Model):
     class Meta:
