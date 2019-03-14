@@ -1,4 +1,4 @@
-from bottle import run , route, template
+from bottle import run, route, template
 
 
 @route('gameserver')
