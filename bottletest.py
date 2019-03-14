@@ -24,3 +24,7 @@ def last_game_result(machine):
 @route('/statpergame/<machine>')
 def last_game_result(machine):
     return '<h1>statpergame page<h1>'
+
+
+if __name__ == '__main__':
+    run(debug=True, reloader=True)
