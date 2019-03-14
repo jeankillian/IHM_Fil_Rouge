@@ -8,6 +8,7 @@ import json
 mysql_db = MySQLDatabase('filrouge', user='filrouge', password='Dorian26000.',
                          host='10.1.0.125')
 
+
 class BaseModel(Model):
     class Meta:
         database = mysql_db
