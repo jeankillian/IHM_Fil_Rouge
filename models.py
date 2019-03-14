@@ -156,7 +156,7 @@ class Data:
 
             stat = StatsPerDay.get(StatsPerDay.machine_id == self.machine,
                                    StatsPerDay.msg_id == datetime.datetime.now.date())
-# FAIRE TRAITEMENT ET REMPOLACEMENT DE LA LIGNE EXISTANTE"""
+# FAIRE TRAITEMENT ET REMPLACEMENT DE LA LIGNE EXISTANTE"""
         except IndexError:
 
             if self.winner == "joueur1":

@@ -1,10 +1,16 @@
 from bottle import run, route, template
+import models as m
 
+ratatouille = m.GameServers.liste_serveur()
+liste = []
+for s in ratatouille:
+    liste.append(s)
+
+r = liste[0]
 
 @route('/gameserver')
 def gameserver():
-    return '<h1>gameserver page<h1>'
-
+    return '<h1>gameserver page' + r.nom +'<h1>'
 
 @route('/lastgameresult')
 def last_game_result():
@@ -28,7 +34,7 @@ def last_game_result(machine):
 
 @route('/')
 def index():
-    return template('./my_page')
+    return template('./my_page', liste=liste)
 
 
 if __name__ == '__main__':
