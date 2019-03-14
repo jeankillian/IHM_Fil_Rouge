@@ -40,7 +40,12 @@ def last_game_result(machine):
 
 @route('/statpergame/<machine>')
 def last_game_result(machine):
-    return '<h1>statpergame page<h1>'
+    templateroute = './StatPerGame.tpl'
+    recupdata = m.StatsPerMatch.liste_game(machine)
+    liste = []
+    for obj in recupdata:
+        liste.append(obj)
+    return template('./my_page', liste=liste, tempdata=templateroute, machine=machine)
 
 
 @route('/')

@@ -17,7 +17,6 @@
       <td>{{item.created_date}}</td>
     </tr>
    %end
-
   </tbody>
 </table>
 </body>

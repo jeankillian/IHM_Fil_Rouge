@@ -5,9 +5,8 @@ import json
 # -------------------------------Sauvegarde des données-----------------------
 
 
-mysql_db = MySQLDatabase('filrouge', user='Dodo', password='Dorian26000.',
+mysql_db = MySQLDatabase('filrouge', user='filrouge', password='Dorian26000.',
                          host='localhost', port=3306)
-
 
 class BaseModel(Model):
     class Meta:
@@ -89,6 +88,14 @@ class StatsPerMatch(BaseModel):
                                         game_time=data_obj.get_game_duration(), winner=data_obj.get_winner())
         return gs, created
 
+    @classmethod
+    def liste_game(cls, machine_name):
+        """
+            :parameter: class
+            :return: une liste, contenant un objet python par enregistrement dans la table (correspond a l'enregistrement).
+        """
+
+        return cls.select().join(GameServers).order_by(cls.start_time).where(GameServers.nom == machine_name)
 
 class StatsPerDay(BaseModel):
 
