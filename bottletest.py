@@ -26,5 +26,10 @@ def last_game_result(machine):
     return '<h1>statpergame page<h1>'
 
 
+@route('/')
+def index():
+    return template('./my_page')
+
+
 if __name__ == '__main__':
     run(debug=True, reloader=True)
