@@ -1,4 +1,4 @@
-from bottle import run , route, template
+from bottle import run, route, template
 
 
 @route('/gameserver')
@@ -13,7 +13,7 @@ def last_game_result():
 
 @route('/configuration/<machine>')
 def configuration(machine):
-    return '<h1>configuration page<h1>'
+    return '<h1>configuration page of ' + machine + '<h1>'
 
 
 @route('/statperday/<machine>')
@@ -24,3 +24,7 @@ def last_game_result(machine):
 @route('/statpergame/<machine>')
 def last_game_result(machine):
     return '<h1>statpergame page<h1>'
+
+
+if __name__ == '__main__':
+    run(debug=True, reloader=True)
