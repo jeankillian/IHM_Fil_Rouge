@@ -1,16 +1,16 @@
 from bottle import run, route, template
 import models as m
 
-ratatouille = m.GameServers.liste_serveur()
-liste = []
-for s in ratatouille:
-    liste.append(s)
 
-r = liste[0]
 
 @route('/gameserver')
 def gameserver():
-    return '<h1>gameserver page' + r.nom +'<h1>'
+    templateroute = './gameserver.tpl'
+    recupdata = m.GameServers.liste_serveur()
+    liste = []
+    for obj in recupdata:
+        liste.append(obj)
+    return template('./my_page', liste=liste, tempdata=templateroute)
 
 @route('/lastgameresult')
 def last_game_result():
@@ -19,12 +19,23 @@ def last_game_result():
 
 @route('/configuration/<machine>')
 def configuration(machine):
+
     return '<h1>configuration page of ' + machine + '<h1>'
 
 
 @route('/statperday/<machine>')
 def last_game_result(machine):
     return '<h1>statperday page<h1>'
+
+
+@route('/log/<machine>')
+def last_game_result(machine):
+    templateroute = './log.tpl'
+    recupdata = m.ReceivedMessage.liste_msg_per_marchine(machine)
+    liste = []
+    for obj in recupdata:
+        liste.append(obj)
+    return template('./my_page', liste=liste, tempdata=templateroute, machine=machine)
 
 
 @route('/statpergame/<machine>')
@@ -34,7 +45,7 @@ def last_game_result(machine):
 
 @route('/')
 def index():
-    return template('./my_page', liste=liste)
+    return '<h1>nothing_here<h1>'
 
 
 if __name__ == '__main__':
