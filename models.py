@@ -2,10 +2,7 @@ import datetime
 from peewee import *
 import os
 import json
-
-
-
-#-------------------------------Sauvegarde des données-----------------------
+# -------------------------------Sauvegarde des données-----------------------
 
 
 mysql_db = MySQLDatabase('filrouge', user='Dodo', password='Dorian26000.',
@@ -70,6 +67,7 @@ class ReceivedMessage(BaseModel):
                                         message=data_obj.msgsaved)
         return gs, created
 
+
 class StatsPerMatch(BaseModel):
 
     machine = ForeignKeyField(GameServers, backref='machin_id')
@@ -90,6 +88,7 @@ class StatsPerMatch(BaseModel):
         gs, created = cls.get_or_create(machine=data_obj.machine, start_time=data_obj.start_time,
                                         game_time=data_obj.get_game_duration(), winner=data_obj.get_winner())
         return gs, created
+
 
 class StatsPerDay(BaseModel):
 
@@ -149,7 +148,7 @@ class Data:
 
         return "And the winner is " + self.winner
 
- # A FINIR-------------------------------------------------------------------------------------------------------
+# A FINIR-------------------------------------------------------------------------------------------------------
 
     def get_stat_per_day(self):
 
@@ -157,7 +156,7 @@ class Data:
 
             stat = StatsPerDay.get(StatsPerDay.machine_id == self.machine,
                                    StatsPerDay.msg_id == datetime.datetime.now.date())
- # FAIRE TRAITEMENT ET REMPOLACEMENT DE LA LIGNE EXISTANTE"""
+# FAIRE TRAITEMENT ET REMPOLACEMENT DE LA LIGNE EXISTANTE"""
         except IndexError:
 
             if self.winner == "joueur1":
@@ -170,4 +169,4 @@ class Data:
                 StatsPerDay.create(machine_id=self.machine, date=self.get_day(), nb_partie=1,
                                    moyenne_partie=self.get_game_duration, draw_count=1)
 
-#------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------
