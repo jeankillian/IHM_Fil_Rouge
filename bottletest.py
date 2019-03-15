@@ -14,7 +14,13 @@ def gameserver():
 
 @route('/lastgameresult')
 def last_game_result():
-    return '<h1>lastgameresult page<h1>'
+    recupdata = m.ReceivedMessage.last_game_result()
+    liste = []
+    templateroute = './lastgameresult.tpl'
+    for objects in recupdata:
+        liste.append(objects)
+    last_game = m.Data(liste[-1].message)
+    return template('./my_page', last_game=last_game, tempdata=templateroute)
 
 
 @route('/configuration/<machine>')

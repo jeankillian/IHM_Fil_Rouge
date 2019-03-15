@@ -67,6 +67,10 @@ class ReceivedMessage(BaseModel):
                                         message=data_obj.msgsaved)
         return gs, created
 
+    @classmethod
+    def last_game_result(cls):
+        return cls.select().order_by(cls.created_date)
+
 
 class StatsPerMatch(BaseModel):
 
