@@ -131,6 +131,16 @@ class StatsPerDay(BaseModel):
             else:
                 StatsPerDay.create(machine_id=cls.machine, date=cls.get_day(), nb_partie=1,
                                    moyenne_partie=cls.get_game_duration, draw_count=1)
+
+
+class Configuration(BaseModel):
+    machine = ForeignKeyField(GameServers, backref='machin_id')
+    max_player_delay = IntegerField()
+    max_coin_blink_delay = IntegerField()
+    victory_blink_delay = IntegerField()
+    level = IntegerField()
+    player_1_color = TextField()
+    player_2_color = TextField()
 # ----------------------------------------Traitement des données-------------------------------
 
 

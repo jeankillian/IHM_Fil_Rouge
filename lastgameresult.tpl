@@ -6,8 +6,8 @@
       <th scope="col">msg_id</th>
       <th scope="col">Message</th>
       <th scope="col">Date</th>
-      <th scope="col">Message</th>
-      <th scope="col">Message</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Winner</th>
     </tr>
   </thead>
   <tbody>
