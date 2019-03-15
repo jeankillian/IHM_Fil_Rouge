@@ -36,7 +36,7 @@ def stat_per_day():
     liste = []
     for obj in recupdata:
         liste.append(obj)
-    return template('./test_stat_per_day', liste=liste, tempdata=templateroute)
+    return template('./my_page', liste=liste, tempdata=templateroute)
 
 
 @route('/log/<machine>')
