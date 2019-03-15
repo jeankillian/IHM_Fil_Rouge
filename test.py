@@ -1,10 +1,15 @@
 import models as m
 
-recupdata = m.ReceivedMessage.last_game_result()
+ratatouille = m.GameServers.liste_serveur()
 liste = []
-templateroute = './lastgameresult.tpl'
-for objects in recupdata:
-    liste.append(objects)
-last_game = m.Data(liste[-1].message)
+for s in ratatouille:
+    liste.append(s)
 
-print(truc.msg_id)
+print(liste[0].nom)
+
+recupdata = m.StatsPerDay.liste_stat_per_marchine()
+print(recupdata)
+liste = []
+for obj in recupdata:
+    liste.append(obj)
+    print(obj.moyenne_partie)

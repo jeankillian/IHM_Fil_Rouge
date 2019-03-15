@@ -1,6 +1,5 @@
 import datetime
 from peewee import *
-import os
 import json
 # -------------------------------Sauvegarde des données-----------------------
 
@@ -29,8 +28,8 @@ class GameServers(BaseModel):
     @classmethod
     def liste_serveur(cls):
         """
-            :parameter: class
-            :return: une liste, contenant un objet python par enregistrement dans la table (correspond a l'enregistrement).
+        :parameter: class
+        :return: une liste, contenant un objet python par enregistrement dans la table (correspond a l'enregistrement).
         """
 
         return cls.select()
@@ -44,7 +43,7 @@ class ReceivedMessage(BaseModel):
     message = TextField()
 
     def __str__(self):
-        return self.machine.nom + " " + str(self.msg_id) + " "+ self.message
+        return self.machine.nom + " " + str(self.msg_id) + " " + self.message
 
     @classmethod
     def liste_msg_per_marchine(cls, machine_name):
@@ -96,11 +95,12 @@ class StatsPerMatch(BaseModel):
     @classmethod
     def liste_game(cls, machine_name):
         """
-            :parameter: class
-            :return: une liste, contenant un objet python par enregistrement dans la table (correspond a l'enregistrement).
+        :parameter: class
+        :return: une liste, contenant un objet python par enregistrement dans la table (correspond a l'enregistrement).
         """
 
         return cls.select().join(GameServers).order_by(cls.start_time).where(GameServers.nom == machine_name)
+
 
 class StatsPerDay(BaseModel):
 
@@ -114,9 +114,23 @@ class StatsPerDay(BaseModel):
 
     @classmethod
     def liste_stat_per_marchine(cls):
-        pass
+        return cls.select()
 
-
+    @classmethod
+    def stat_per_day(cls):
+        try:
+            stat = StatsPerDay.get(StatsPerDay.machine_id == cls.machine,
+                                   StatsPerDay.day == cls.date)
+        except IndexError:
+            if cls.winner == "player1":
+                StatsPerDay.create(machine_id=cls.machine, date=cls.get_day(), nb_partie=1,
+                                   moyenne_partie=cls.get_game_duration, win_count_joueur1=1)
+            elif cls.winner == "player2":
+                StatsPerDay.create(machine_id=cls.machine, date=cls.get_day(), nb_partie=1,
+                                   moyenne_partie=cls.get_game_duration, win_count_joueur2=1)
+            else:
+                StatsPerDay.create(machine_id=cls.machine, date=cls.get_day(), nb_partie=1,
+                                   moyenne_partie=cls.get_game_duration, draw_count=1)
 # ----------------------------------------Traitement des données-------------------------------
 
 
@@ -125,8 +139,8 @@ class Data:
 
     def __init__(self, json_formatted_string):
         """
-            :parameter: String de donnée formater en json (!!!!contenant un dict!!!)
-            :return : (type: objet) un objet avec comme attribut chaque "key/value" du "dict" extrait des données
+        :parameter: String de donnée formater en json (!!!!contenant un dict!!!)
+        :return : (type: objet) un objet avec comme attribut chaque "key/value" du "dict" extrait des données
         """
 
         data = json.loads(json_formatted_string)
@@ -141,44 +155,21 @@ class Data:
 
     def get_day(self):
         """
-            :return:(type: datetime) la valeur de l'attribut start_time tronqué avec uniquement la date
+        :return:(type: datetime) la valeur de l'attribut start_time tronqué avec uniquement la date
         """
 
         return self.start_time.date()
 
     def get_game_duration(self):
         """
-            :return: (type: datetime) le resultat de la soustraction de l'attrbut "end_time" par "start_time" en seconde
+        :return: (type: datetime) le resultat de la soustraction de l'attrbut "end_time" par "start_time" en seconde
         """
 
         return (self.end_time - self.start_time).total_seconds()
 
     def get_winner(self):
         """
-            :return: (type: str)la valeur de l'attribut "winner" habillé avec une phrase
+        :return: (type: str)la valeur de l'attribut "winner" habillé avec une phrase
         """
 
         return "And the winner is " + self.winner
-
-# A FINIR-------------------------------------------------------------------------------------------------------
-
-    def get_stat_per_day(self):
-
-        try:
-
-            stat = StatsPerDay.get(StatsPerDay.machine_id == self.machine,
-                                   StatsPerDay.msg_id == datetime.datetime.now.date())
-# FAIRE TRAITEMENT ET REMPLACEMENT DE LA LIGNE EXISTANTE"""
-        except IndexError:
-
-            if self.winner == "joueur1":
-                StatsPerDay.create(machine_id=self.machine, date=self.get_day(), nb_partie=1,
-                                   moyenne_partie=self.get_game_duration, win_count_joueur1=1)
-            elif self.winner == "joueur2":
-                StatsPerDay.create(machine_id=self.machine, date=self.get_day(), nb_partie=1,
-                                   moyenne_partie=self.get_game_duration, win_count_joueur2=1)
-            else:
-                StatsPerDay.create(machine_id=self.machine, date=self.get_day(), nb_partie=1,
-                                   moyenne_partie=self.get_game_duration, draw_count=1)
-
-# ------------------------------------------------------------------------------------------------------------------
