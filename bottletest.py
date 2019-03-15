@@ -2,7 +2,6 @@ from bottle import run, route, template
 import models as m
 
 
-
 @route('/gameserver')
 def gameserver():
     templateroute = './gameserver.tpl'
@@ -11,6 +10,7 @@ def gameserver():
     for obj in recupdata:
         liste.append(obj)
     return template('./my_page', liste=liste, tempdata=templateroute)
+
 
 @route('/lastgameresult')
 def last_game_result():
@@ -24,12 +24,12 @@ def configuration(machine):
 
 
 @route('/statperday/<machine>')
-def last_game_result(machine):
+def stat_per_day(machine):
     return '<h1>statperday page<h1>'
 
 
 @route('/log/<machine>')
-def last_game_result(machine):
+def log_machine(machine):
     templateroute = './log.tpl'
     recupdata = m.ReceivedMessage.liste_msg_per_marchine(machine)
     liste = []
@@ -39,7 +39,7 @@ def last_game_result(machine):
 
 
 @route('/statpergame/<machine>')
-def last_game_result(machine):
+def stat_per_game(machine):
     templateroute = './StatPerGame.tpl'
     recupdata = m.StatsPerMatch.liste_game(machine)
     liste = []
