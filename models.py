@@ -41,8 +41,8 @@ class GameServers(BaseModel):
         return cls.select()
 
     @classmethod
-    def list_config(cls, machine_name):
-        return cls.select(cls.max_player_delay, cls.max_coin_blink_delay, cls.victory_blink_delay, cls.level, cls.player_1_color, cls.player_2_color).where(cls.nom == machine_name)
+    def config(cls, machine_name):
+        return cls.get(cls.max_player_delay, cls.max_coin_blink_delay, cls.victory_blink_delay, cls.level, cls.player_1_color, cls.player_2_color).where(cls.nom == machine_name)
 
     @classmethod
     def create_config(cls, machine_name, address):
@@ -195,3 +195,30 @@ class Data:
         """
 
         return "And the winner is " + self.winner
+
+
+    def record_me(self):
+        """
+        :parameter
+            :arg self
+            :type objet
+
+
+        :return:
+            :type str
+        """
+        # try:
+
+        record_SPM, cr1 = StatsPerMatch.record_data(self)
+        print(cr1)
+        record_RM, cr2 = ReceivedMessage.record_data(self)
+        print(cr2)
+
+        #     if cr1 and cr2:
+        #         return_status = "recorded"
+        #
+        # except pymysql.err.OperationalError:
+        #
+        #     return_status = "access denied"
+        #
+        # return return_status

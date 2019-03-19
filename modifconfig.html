@@ -1,35 +1,88 @@
-coucou
+
 <form action="" method="post">
 
-    <h1>New Configuration</h1><h2>for {{machine}}</h2>
+  adresse_ip :
 
-    <h4>max player delay</h4>
-            <input name="max player delay" type="text" />
+    <input type="text" name="adresse_ip" value="{{ config.adresse_ip }}"> <br>
 
-    <h4>Max coin blink delay</h4>
-           <input name="max coin blink delay" type="text" />
 
-    <h4>Victory blink delay</h4>
-            <input name="victory blink delay" type="text" />
 
-    <h4>Level</h4>
-            <input name="level" type="text" />
-    <div>
-    player 1 :
-            <select name="nom" size="1">
-                <option>rouge
-                <option>vert
-                <option>bleu
-            </select>
-    </div>
-    <div>
-    player 2 :
-           <select name="nom" size="1">
-                <option>rouge
-                <option>vert
-                <option>bleu
-           </select>
-    </div>
-    <h4>Save new configuration</h4>
-            <input value="Save" type="submit" />
+    nom du serveur :
+
+    <input type="text" name="nom" value="{{ config.nom }}"> <br>
+
+
+
+    Jeux :
+
+    <select name="jeu">
+
+       <option {% if config.jeu == "morpion" %}selected{% endif %} value="morpion">Morpion</option>
+
+       <option {% if config.jeu == "puissance 4" %}selected{% endif %} value="puissance 4">Puissance 4</option>
+
+    </select> <br>
+
+
+
+    max player delay :
+
+    <input type="number" name="max_player_delay" value="{{ config.max_player_delay }}"> <br>
+
+
+
+    max coin blink delay :
+
+    <input type="number" name="max_coin_blink_delay" value="{{ config.max_coin_blink_delay }}"> <br>
+
+
+
+    Victory Blink delay :
+
+    <input type="number" name="victory_blink_delay" value="{{ config.victory_blink_delay }}"> <br>
+
+
+
+    Level :
+
+    <input type="number" name="level" value="1" max="5" value="{{ config.level }}"> <br>
+
+
+
+    Player 1 color :
+
+    <select name="player_1_color">
+
+       <option {% if config.player_1_color == "bleu" %}selected{% endif %} value="bleu">Bleu</option>
+
+       <option {% if config.player_1_color == "vert" %}selected{% endif %} value="vert">Vert</option>
+
+       <option {% if config.player_1_color == "rouge" %}selected{% endif %} value="rouge">Rouge</option>
+
+    </select>
+
+    <br>
+
+
+
+    Player 2 color :
+
+    <select name="player_2_color">
+
+       <option {% if config.player_2_color == "bleu" %}selected{% endif %} value="bleu">Bleu</option>
+
+       <option {% if config.player_2_color == "vert" %}selected{% endif %} value="vert">Vert</option>
+
+       <option {% if config.player_2_color == "rouge" %}selected{% endif %} value="rouge">Rouge</option>
+
+    </select>
+
+    <br> <br>
+
+
+
+   <input type="reset">
+
+   <input type="submit">
+
 </form>

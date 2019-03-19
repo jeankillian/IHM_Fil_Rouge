@@ -25,7 +25,7 @@ def last_game_result():
 
 @route('/configuration/<machine>')
 def configuration(machine):
-    recupdata = m.GameServers.list_config(machine)
+    recupdata = m.GameServers.config(machine)
     liste = []
     templateroute = './configuration.html'
     for objects in recupdata:
@@ -70,33 +70,28 @@ def index():
 
 @get('/modifconfig/<machine>')
 def config(machine):
+    config = m.GameServers.get(m.GameServers.nom == machine)
     templateroute = './modifconfig.html'
-    return template('./my_page', tempdata=templateroute, machine=machine)
+    return template('./my_page', tempdata=templateroute, config=config)
 
 
 @post('/modifconfig/<machine>')
 def modifconfig(machine):
+    print(dict(request.forms))
+    config = m.GameServers.get(m.GameServers.nom == machine)
+    config.adresse_ip = request.forms.get("adresse_ip")
+    config.jeu = request.forms.get("jeu")
+    config.max_player_delay = request.forms.get('max_player_delay')
+    config.max_coin_blink_delay = request.forms.get('max_coin_blink_delay')
+    config.victory_blink_delay = request.forms.get('victory_blink_delay')
+    config.level = request.forms.get('level')
+    config.player_1_color = request.forms.get('player_1_color')
+    config.player_2_color = request.forms.get('player_2_color')
+    print(type(config.player_1_color))
+    print(type(config.player_2_color))
+    config.save()
 
-    max_player_delay = request.forms.get('max player delay')
-    max_coin_blink_delay = request.forms.get('max coin blink delay')
-    victory_blink_delay = request.forms.get('victory blink delay')
-    level = request.forms.get('level')
-    player1_color = request.forms.get('player1_color')
-    player2_color = request.forms.get('player2_color')
-    print(max_player_delay)
-    print(max_coin_blink_delay)
-    print(victory_blink_delay)
-    print(level)
-    print(player1_color)
-    print(player2_color)
-    # query = m.GameServers.create_config(machine, adresse_ip)
-
-    # m.GameServers.get_or_create(adresse_ip=adresse_ip, name_server=machine,
-    #                                   game=game, max_player_delay=max_player_delay,
-    #                                   max_coin_blink_delay=max_coin_blink_delay,
-    #                                   victory_blink_delay=victory_blink_delay, level=level,
-    #                                   player1_color=player1_color, player2_color=player2_color)
-    return "OK"
+    return "Nouvelle configuration pour " + machine
 
 
 if __name__ == '__main__':
