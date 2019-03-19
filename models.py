@@ -48,10 +48,11 @@ class GameServers(BaseModel):
     def create_config(cls, machine_name, address):
         query = cls.select().where(cls.nom == machine_name)
         if query.exists():
-            return cls.select()
+            return query
         else:
             cls.create(nom=machine_name, adresse_ip=address)
-            return cls.select()
+            query = cls.select().where(cls.nom == machine_name)
+            return query
 
 
 class ReceivedMessage(BaseModel):
@@ -92,7 +93,7 @@ class ReceivedMessage(BaseModel):
 
 class StatsPerMatch(BaseModel):
 
-    machine = ForeignKeyField(GameServers, backref='machin_id')
+    machine = ForeignKeyField(GameServers, backref='machine_id')
     start_time = DateTimeField()
     game_time = IntegerField()
     winner = CharField()

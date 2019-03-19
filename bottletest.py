@@ -1,4 +1,4 @@
-from bottle import run, route, template
+from bottle import run, route, template, request, post, get
 import models as m
 
 
@@ -66,6 +66,37 @@ def stat_per_game(machine):
 @route('/')
 def index():
     return '<h1>nothing_here<h1>'
+
+
+@get('/modifconfig/<machine>')
+def config(machine):
+    templateroute = './modifconfig.html'
+    return template('./my_page', tempdata=templateroute, machine=machine)
+
+
+@post('/modifconfig/<machine>')
+def modifconfig(machine):
+
+    max_player_delay = request.forms.get('max player delay')
+    max_coin_blink_delay = request.forms.get('max coin blink delay')
+    victory_blink_delay = request.forms.get('victory blink delay')
+    level = request.forms.get('level')
+    player1_color = request.forms.get('player1_color')
+    player2_color = request.forms.get('player2_color')
+    print(max_player_delay)
+    print(max_coin_blink_delay)
+    print(victory_blink_delay)
+    print(level)
+    print(player1_color)
+    print(player2_color)
+    # query = m.GameServers.create_config(machine, adresse_ip)
+
+    # m.GameServers.get_or_create(adresse_ip=adresse_ip, name_server=machine,
+    #                                   game=game, max_player_delay=max_player_delay,
+    #                                   max_coin_blink_delay=max_coin_blink_delay,
+    #                                   victory_blink_delay=victory_blink_delay, level=level,
+    #                                   player1_color=player1_color, player2_color=player2_color)
+    return "OK"
 
 
 if __name__ == '__main__':
