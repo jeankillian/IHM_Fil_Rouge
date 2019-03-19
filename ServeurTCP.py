@@ -1,6 +1,7 @@
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 import json
 import models as m
+import peewee
 
 def Main():
     host = '127.0.0.1'
@@ -22,9 +23,14 @@ def Main():
             if length > 0:
                 response = c.recv(length).decode(encoding)
                 print("Received message: {!r}".format(response))
+
                 data = json.loads(response)
-                print(data)
+# -----------------------------Sauvegarde du message dans la base----------------------------------------
+
+                m.ReceivedMessage.create(msg_id=data["Msg ID"], machine=m.GameServers.get(m.GameServers.nom == data["Machine name"]), message=data)
+
                 if data["Msg type"] == "STATS":
+                    # Renvoi du ACK for STATS au client
                     message_send = {
                         "Msg type": "ACK",
                         "Msg ID": data["Msg ID"],
@@ -37,18 +43,19 @@ def Main():
 
                 elif data["Msg type"] == "CONFIG":
                     address = addr[0]
-                    print(type(address))
                     machine_name = data["Machine name"]
-                    m.GameServers.create_config(machine_name, address)
+                    config_machine = m.GameServers.create_config(machine_name, address)
+                    print(config_machine)
+
                     message_send = {
                         "Msg type": "CONFIG",
                         "Msg ID": data["Msg ID"],
-                        "Max player delay": "<time in seconds>",
-                        "Max coin blink delay": "<time in seconds>",
-                        "Victory blink delay": "<time in seconds>",
-                        "Level": "<integer>",
-                        "Player1 color": "<color value>",
-                        "Player2 color": "<color value>",
+                        "Max player delay": config_machine.max_player_delay,
+                        "Max coin blink delay": config_machine.max_coin_blink_delay,
+                        "Victory blink delay": config_machine.victory_blink_delay,
+                        "Level": config_machine.level,
+                        "Player1 color": config_machine.player_1_color,
+                        "Player2 color": config_machine.player_2_color,
                     }
                     message_send = json.dumps(message_send)
                     message_length = len(message_send).to_bytes(buffer_size, byteorder='little')

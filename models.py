@@ -48,11 +48,9 @@ class GameServers(BaseModel):
     def create_config(cls, machine_name, address):
         query = cls.select().where(cls.nom == machine_name)
         if query.exists():
-            return query
+            return query[0]
         else:
-            cls.create(nom=machine_name, adresse_ip=address)
-            query = cls.select().where(cls.nom == machine_name)
-            return query
+            return cls.create(nom=machine_name, adresse_ip=address)
 
 
 class ReceivedMessage(BaseModel):
@@ -74,8 +72,8 @@ class ReceivedMessage(BaseModel):
         """
         return cls.select().join(GameServers).order_by(cls.created_date).where(GameServers.nom == machine_name)
 
-    @classmethod
-    def record_data(cls, data_obj):
+
+    def record_data(self, data_obj):
         """
             :parameter: (type: Class/Objet) class + Data_obj (instance de la class Data)
             Fait un "get or create" des attributs ciblés de Data_obj (créer un enregistrement dans la base
@@ -207,18 +205,5 @@ class Data:
         :return:
             :type str
         """
-        # try:
 
         record_SPM, cr1 = StatsPerMatch.record_data(self)
-        print(cr1)
-        record_RM, cr2 = ReceivedMessage.record_data(self)
-        print(cr2)
-
-        #     if cr1 and cr2:
-        #         return_status = "recorded"
-        #
-        # except pymysql.err.OperationalError:
-        #
-        #     return_status = "access denied"
-        #
-        # return return_status

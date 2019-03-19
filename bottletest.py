@@ -74,7 +74,7 @@ def config(machine):
 
 @post('/modifconfig/<machine>')
 def modifconfig(machine):
-    print(dict(request.forms))
+
     config = m.GameServers.get(m.GameServers.nom == machine)
     config.adresse_ip = request.forms.get("adresse_ip")
     config.jeu = request.forms.get("jeu")
@@ -84,11 +84,9 @@ def modifconfig(machine):
     config.level = request.forms.get('level')
     config.player_1_color = request.forms.get('player_1_color')
     config.player_2_color = request.forms.get('player_2_color')
-    print(type(config.player_1_color))
-    print(type(config.player_2_color))
     config.save()
 
-    return "Nouvelle configuration pour " + machine
+    return "./configuration/<machine>"
 
 
 if __name__ == '__main__':
