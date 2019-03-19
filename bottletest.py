@@ -4,7 +4,7 @@ import models as m
 
 @route('/gameserver')
 def gameserver():
-    templateroute = './gameserver.tpl'
+    templateroute = './gameserver.html'
     recupdata = m.GameServers.liste_serveur()
     liste = []
     for obj in recupdata:
@@ -16,7 +16,7 @@ def gameserver():
 def last_game_result():
     recupdata = m.ReceivedMessage.last_game_result()
     liste = []
-    templateroute = './lastgameresult.tpl'
+    templateroute = './lastgameresult.html'
     for objects in recupdata:
         liste.append(objects)
     last_game = m.Data(liste[-1].message)
@@ -45,7 +45,7 @@ def stat_per_day():
 
 @route('/log/<machine>')
 def log_machine(machine):
-    templateroute = './log.tpl'
+    templateroute = './log.html'
     recupdata = m.ReceivedMessage.liste_msg_per_marchine(machine)
     liste = []
     for obj in recupdata:
