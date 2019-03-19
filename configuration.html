@@ -1,0 +1,31 @@
+
+<body>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Machine</th>
+       <th scope="col">Max Player Delay</th>
+      <th scope="col"> Max Coin Blink Delay</th>
+        <th scope="col">Victory Blink Dela</th>
+      <th scope="col">Level</th>
+        <th scope="col">Player 1 Color</th>
+      <th scope="col"> Player 2 Color</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  % for item in liste:
+    <tr>
+      <th scope="row">{{item.nom}}</th>
+        <td>{{item.max_player_delay}}</td>
+        <td>{{item.max_coin_blink_delay}}</td>
+      <td>{{item.victory_blink_delay}}</td>
+        <td>{{item.level}}</td>
+      <td>{{item.player_1_color}}</td>
+      <td>{{item.player_2_color}}</td>
+    </tr>
+   %end
+
+  </tbody>
+</table>
+</body>

@@ -18,6 +18,12 @@ class GameServers(BaseModel):
     nom = CharField(unique=True)
     adresse_ip = CharField(unique=True)
     jeu = CharField()
+    max_player_delay = IntegerField()
+    max_coin_blink_delay = IntegerField()
+    victory_blink_delay = IntegerField()
+    level = IntegerField()
+    player_1_color = TextField()
+    player_2_color = TextField()
 
     def __str__(self):
         return self.nom
@@ -33,6 +39,10 @@ class GameServers(BaseModel):
         """
 
         return cls.select()
+
+    @classmethod
+    def list_config(cls, machine_name):
+        return cls.select(cls.max_player_delay, cls.max_coin_blink_delay, cls.victory_blink_delay, cls.level, cls.player_1_color, cls.player_2_color).where(cls.nom == machine_name)
 
 
 class ReceivedMessage(BaseModel):
@@ -133,14 +143,6 @@ class StatsPerDay(BaseModel):
                                    moyenne_partie=cls.get_game_duration, draw_count=1)
 
 
-class Configuration(BaseModel):
-    machine = ForeignKeyField(GameServers, backref='machin_id')
-    max_player_delay = IntegerField()
-    max_coin_blink_delay = IntegerField()
-    victory_blink_delay = IntegerField()
-    level = IntegerField()
-    player_1_color = TextField()
-    player_2_color = TextField()
 # ----------------------------------------Traitement des données-------------------------------
 
 

@@ -25,8 +25,12 @@ def last_game_result():
 
 @route('/configuration/<machine>')
 def configuration(machine):
-
-    return '<h1>configuration page of ' + machine + '<h1>'
+    recupdata = m.GameServers.list_config(machine)
+    liste = []
+    templateroute = './configuration.html'
+    for objects in recupdata:
+        liste.append(objects)
+    return template('./my_page', liste=liste, machine=machine, tempdata=templateroute)
 
 
 @route('/statperday')
