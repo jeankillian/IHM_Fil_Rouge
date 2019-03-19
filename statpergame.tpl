@@ -2,7 +2,7 @@
 <body>
 <table class="table table-striped table-dark">
   <thead>
-  <h1>{{machine}}</h1>
+  <h1>Stats per game for gameserver : {{machine}}</h1>
     <tr>
       <th scope="col">Heure de départ</th>
       <th scope="col">Temps de partie</th>

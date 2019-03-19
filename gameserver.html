@@ -1,5 +1,6 @@
 
 <body>
+  <h1>Gameservers</h1>
 <table class="table table-striped table-dark">
   <thead>
     <tr>
@@ -15,7 +16,7 @@
       <th scope="row">{{item}}</th>
       <td>{{item.adresse_ip}}</td>
       <td>{{item.jeu}}</td>
-      <td><a type="button" href="configuration.html" class="btn btn-secondary">Config</a></td>
+      <td><a type="button" href="configuration/{{item}}" class="btn btn-secondary">Config</a></td>
     </tr>
    %end
 

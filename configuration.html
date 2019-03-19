@@ -14,18 +14,17 @@
     </tr>
   </thead>
   <tbody>
-  % for item in liste:
     <tr>
-      <th scope="row">{{item.nom}}</th>
+      <th scope="row">{{machine}}</th>
         <td>{{item.max_player_delay}}</td>
         <td>{{item.max_coin_blink_delay}}</td>
       <td>{{item.victory_blink_delay}}</td>
         <td>{{item.level}}</td>
       <td>{{item.player_1_color}}</td>
       <td>{{item.player_2_color}}</td>
+      <td><a type="button" href="../modifconfig/{{machine}}" class="btn btn-secondary">Modify</a></td>
     </tr>
    %end
-
   </tbody>
 </table>
 </body>

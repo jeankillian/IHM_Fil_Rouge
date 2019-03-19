@@ -1,3 +1,4 @@
+<h1>Stats</h1>
 <table class="table table-striped table-dark">
   <thead>
     <tr>
@@ -20,6 +21,7 @@
       <td>{{item.win_count_joueur1}}</td>
       <td>{{item.win_count_joueur2}}</td>
       <td>{{item.draw_count}}</td>
+      <td><a type="button" href="/statpergame/{{item}}" class="btn btn-secondary">Per game</a></td>
     </tr>
    %end
   </tbody>

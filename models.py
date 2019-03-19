@@ -42,7 +42,7 @@ class GameServers(BaseModel):
 
     @classmethod
     def config(cls, machine_name):
-        return cls.get(cls.max_player_delay, cls.max_coin_blink_delay, cls.victory_blink_delay, cls.level, cls.player_1_color, cls.player_2_color).where(cls.nom == machine_name)
+        return cls.get(cls.nom == machine_name)
 
     @classmethod
     def create_config(cls, machine_name, address):

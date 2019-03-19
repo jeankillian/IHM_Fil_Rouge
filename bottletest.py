@@ -26,11 +26,8 @@ def last_game_result():
 @route('/configuration/<machine>')
 def configuration(machine):
     recupdata = m.GameServers.config(machine)
-    liste = []
     templateroute = './configuration.html'
-    for objects in recupdata:
-        liste.append(objects)
-    return template('./my_page', liste=liste, machine=machine, tempdata=templateroute)
+    return template('./my_page', item=recupdata, machine=machine, tempdata=templateroute)
 
 
 @route('/statperday')
@@ -55,7 +52,7 @@ def log_machine(machine):
 
 @route('/statpergame/<machine>')
 def stat_per_game(machine):
-    templateroute = './StatPerGame.tpl'
+    templateroute = './statpergame.tpl'
     recupdata = m.StatsPerMatch.liste_game(machine)
     liste = []
     for obj in recupdata:
