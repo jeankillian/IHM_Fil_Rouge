@@ -1,6 +1,6 @@
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 import json
-
+import models as m
 
 def Main():
     host = '127.0.0.1'
@@ -36,6 +36,10 @@ def Main():
                     c.send(message_final)
 
                 elif data["Msg type"] == "CONFIG":
+                    address = addr[0]
+                    print(type(address))
+                    machine_name = data["Machine name"]
+                    m.GameServers.create_config(machine_name, address)
                     message_send = {
                         "Msg type": "CONFIG",
                         "Msg ID": data["Msg ID"],

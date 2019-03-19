@@ -17,13 +17,13 @@ class GameServers(BaseModel):
 
     nom = CharField(unique=True)
     adresse_ip = CharField(unique=True)
-    jeu = CharField()
-    max_player_delay = IntegerField()
-    max_coin_blink_delay = IntegerField()
-    victory_blink_delay = IntegerField()
-    level = IntegerField()
-    player_1_color = TextField()
-    player_2_color = TextField()
+    jeu = CharField(default= 'Morpion')
+    max_player_delay = IntegerField(default=10)
+    max_coin_blink_delay = IntegerField(default=10)
+    victory_blink_delay = IntegerField(default=10)
+    level = IntegerField(default=1)
+    player_1_color = TextField(default='red')
+    player_2_color = TextField(default= 'blue')
 
     def __str__(self):
         return self.nom
@@ -43,6 +43,15 @@ class GameServers(BaseModel):
     @classmethod
     def list_config(cls, machine_name):
         return cls.select(cls.max_player_delay, cls.max_coin_blink_delay, cls.victory_blink_delay, cls.level, cls.player_1_color, cls.player_2_color).where(cls.nom == machine_name)
+
+    @classmethod
+    def create_config(cls, machine_name, address):
+        query = cls.select().where(cls.nom == machine_name)
+        if query.exists():
+            return cls.select()
+        else:
+            cls.create(nom=machine_name, adresse_ip=address)
+            return cls.select()
 
 
 class ReceivedMessage(BaseModel):
